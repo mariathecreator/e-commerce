@@ -6,6 +6,7 @@ const Sign = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
+    const [sucess,isSucess]=useState(null)
 
 
     const handleSubmit = async (e) => {
@@ -18,24 +19,27 @@ const Sign = () => {
             setName("")
             setEmail("")
             setPassword("")
+            isSucess(true)
             setMessage("registered successfully")
         }
         catch (err) {
             console.error(err.response?.data?.message || err)
+            isSucess(false)
             setMessage("registeration failed" + (err.response?.data?.message || "unknown error"))
         }
     }
 
     return (
-        <div className="bg-black text-white mt-10 w-auto h-auto">
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <input type="text" name="name" value={name} placeholder="name" className="p-5" onChange={(e) => setName(e.target.value)} />
-                    <input type="email" name="name" value={email} placeholder="email" onChange={(e) => setEmail(e.target.value)} />
-                    <input type="password" name="name" value={password} placeholder="password" onChange={(e) => setPassword(e.target.value)} />
-                    <button type="submit">Submit</button>
+        <div className="flex flex-col items-center  min-h-screen text-white mt-15 w-auto h-auto">
+            <div className="w-full max-w-md rounded-3xl p-8 shadow-lg bg-black ">
+                <h2 className="text-3xl font-bold text-centermb-6">Sign Up</h2>
+                <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
+                    <input type="text" name="name" value={name} placeholder="name" className="p-3 rounded-3xl text-white border border-white focus:outline-none" onChange={(e) => setName(e.target.value)} />
+                    <input type="email" name="name" value={email} placeholder="email" className="p-3 rounded-3xl text-white border border-white focus:outline-none" onChange={(e) => setEmail(e.target.value)} />
+                    <input type="password" name="name" value={password} placeholder="password" className="p-3 rounded-3xl text-white border border-white focus:outline-none" onChange={(e) => setPassword(e.target.value)} />
+                    <button className="border border-white py-3 rounded-3xl " type="submit">Submit</button>
                 </form></div>
-            {message && (<p>{message}</p>)}
+            {message && (<p className={`mt-4 text-center font-medium ${sucess ?"text-green-400":"text-red-400"}`}>{message}</p>)}
         </div>
     )
 

@@ -1,11 +1,13 @@
 import { useState } from "react";
 import api from "../global/Axios";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
     const [sucess ,isSucess] = useState(null)
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -18,6 +20,7 @@ const Admin = () => {
             setPassword("")
             isSucess(true)
             setMessage("login successful"+(res.data.message))
+            navigate("/dashboard")
         }
         catch (err) {
             console.error(err)
@@ -47,12 +50,14 @@ const Admin = () => {
             className="p-3 rounded-3xl bg-white text-black focus:outline-none"
             required
           />
+          
           <button
             type="submit"
             className="border border-white py-3 rounded-3xl hover:bg-white hover:text-black transition duration-200"
           >
             Submit
           </button>
+          
         </form>
 
         {message && (

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import api from "../global/Axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
@@ -19,6 +20,8 @@ const Login = () => {
             setPassword("")
             isSucess(true)
             setMessage("login successful:" + (res.data.message))
+            navigate('/home')
+            
         }
         catch (err) {
             console.error(err)
@@ -34,7 +37,7 @@ const Login = () => {
                 <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
                     <input className="p-3 rounded-3xl  text-black  bg-white focus:outline-none " type="email" name="email" value={email} placeholder="email" onChange={(e) => setEmail(e.target.value)} />
                     <input className="p-3 rounded-3xl  text-black  bg-white focus:outline-none " type="password" name="password" value={password} placeholder="password" onChange={(e) => setPassword(e.target.value)} />
-                    <button className="border border-white py-3 rounded-3xl text-white" type="submit">Submit</button>
+                    <button className="border border-white py-3 rounded-3xl " type="submit">Submit</button>
                 </form>
             </div>
             {message && (
@@ -47,7 +50,7 @@ const Login = () => {
             )}
             <div className="mt-10 text-lg text-center text-black">
                 <h3 className="">If admin? Then Login here</h3>
-                <Link className="underline" to="/Adminlogin">Login</Link>
+                <Link className="underline" to="/adminlogin">Login</Link>
 
 
             </div>
