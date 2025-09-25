@@ -1,11 +1,11 @@
-import Body from "../components/body"
 import Cover from "../components/cover"
+import Userbody from "../components/loginbody"
 
 const UserDashboard=()=>{
     return(
         <>
         <Cover/>
-        <Body/>
+        <Userbody/>
         </>
     )
 }
