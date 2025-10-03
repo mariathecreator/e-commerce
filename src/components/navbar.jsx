@@ -17,7 +17,7 @@ const Navbar = () => {
       <div className="py-6">
         <div className="flex gap-6 justify-center items-center font-medium">
           
-          <Link to="/home" className="font-bold text-3xl">SHOP.CO</Link>
+          <Link to="/" className="font-bold text-3xl">SHOP.CO</Link>
 
           
           <ul className="flex gap-5 items-center">

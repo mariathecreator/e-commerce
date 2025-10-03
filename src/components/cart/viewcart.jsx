@@ -104,7 +104,7 @@ const Cart = () => {
 
                             <button
                                 onClick={() => handleDelete(item.product)}
-                                className="mt-2 px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600"
+                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                             >
                                 Delete
                             </button>

@@ -75,7 +75,7 @@ const Userbody = () => {
                             .map((item) => (
                                 <div
                                     key={item._id}
-                                    className="min-w-[220px] bg-white  rounded-2xl shadow-sm 
+                                    className=" max-w-[220px] bg-white  rounded-2xl shadow-sm 
                  hover:shadow-xl hover:-translate-y-2 hover:border-gray-300 
                  transition-all duration-300 flex-shrink-0"
                                     onClick={() => {
@@ -97,9 +97,9 @@ const Userbody = () => {
                                         <h4 className="font-semibold text-lg text-gray-800 truncate">
                                             {item.name}
                                         </h4>
-                                        <div className="flex items-center justify-center gap-2 mt-2">
+                                        <div className="flex flex-col items-center justify-center gap-2 mt-2">
                                             <h5 className="text-xl font-bold text-black">${item.price}</h5>
-                                            <h5 className="text-xl font-bold text-black">${item.brand}</h5>
+                                            <h5 className="text-xl font-bold text-black">{item.brand}</h5>
 
                                         </div>
 
