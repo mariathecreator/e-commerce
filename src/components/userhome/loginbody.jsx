@@ -1,25 +1,28 @@
 import { useRef, useEffect, useState } from "react";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
-import api from "../global/Axios";
+import api from "../../global/Axios";
+import { useNavigate } from "react-router-dom";
 
 
 const Userbody = () => {
     const scrollRef = useRef({})
     const [products, setProducts] = useState([])
+    const navigate = useNavigate()
+
     useEffect(() => {
         const fetchData = async () => {
-        try{
-            const res = await api.get("/products")
-            console.log(res.data);
-            console.log(res);
-    
-            setProducts(res.data)
+            try {
+                const res = await api.get("/user/viewproducts")
+                console.log(res.data);
+                console.log(res);
+
+                setProducts(res.data)
+            }
+            catch (err) {
+                console.error(err)
+            }
         }
-        catch(err){
-            console.error(err)  
-        }
-    }
-    fetchData()
+        fetchData()
     }, [])
 
     const scroll = (category, direction) => {
@@ -32,7 +35,10 @@ const Userbody = () => {
             )
         }
     }
-    const categories = [...new Map(products.map((item) =>[item.category._id, item.category])).values()]
+    
+    const categories = [...new Map(products.map((item) => [item.category._id, item.category])).values()]
+
+
     return (
         <div className="bg-white w-auto h-auto">
             <div>
@@ -47,21 +53,21 @@ const Userbody = () => {
 
                     {/* Scroll buttons */}
                     <button
-                        onClick={() => scroll(category, "left")}
+                        onClick={() => scroll(category._id, "left")}
                         className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100 z-10"
                     >
                         <IoChevronBack size={24} className="text-black" />
                     </button>
 
                     <button
-                        onClick={() => scroll(category, "right")}
+                        onClick={() => scroll(category._id, "right")}
                         className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-50 p-2 rounded-full shadow hover:bg-gray-100 z-10"
                     >
                         <IoChevronForward size={24} className="text-black" />
                     </button>
 
                     <div
-                        ref={(el) => (scrollRef.current[category] = el)}
+                        ref={(el) => (scrollRef.current[category._id] = el)}
                         className="flex gap-6 overflow-x-auto snap-center scroll-smooth no-scrollbar px-10"
                     >
                         {products
@@ -72,6 +78,10 @@ const Userbody = () => {
                                     className="min-w-[220px] bg-white  rounded-2xl shadow-sm 
                  hover:shadow-xl hover:-translate-y-2 hover:border-gray-300 
                  transition-all duration-300 flex-shrink-0"
+                                    onClick={() => {
+                                        console.log("Navigating to:", `/home/itemcard/${item._id}`);
+                                        navigate(`itemcard/${item._id}`)
+                                    }}
                                 >
 
                                     <div className="w-full h-64 bg-gray-50 flex items-center justify-center rounded-t-2xl overflow-hidden">
@@ -94,12 +104,7 @@ const Userbody = () => {
                                         </div>
 
 
-                                        <button
-                                            className="mt-4 w-full py-2 bg-black text-white rounded-xl 
-                     opacity-0 group-hover:opacity-100 transition-all duration-300"
-                                        >
-                                            Add to Cart
-                                        </button>
+
                                     </div>
                                 </div>
                             ))}

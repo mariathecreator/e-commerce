@@ -1,13 +1,11 @@
-import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import { ChevronDownIcon } from "@heroicons/react/24/solid"; // ✅ Updated import
-import axios from "axios"
+import { ChevronDownIcon } from "@heroicons/react/24/solid"; 
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <div>
-      {/* Top banner */}
+      
       <div className="bg-black text-white text-xs flex gap-2 justify-center py-2">
         <p>Sign up and get 20% off to your first order.</p>
         <a href="#" className="underline">
@@ -18,10 +16,10 @@ const Navbar = () => {
       {/* Main navbar */}
       <div className="py-6">
         <div className="flex gap-6 justify-center items-center font-medium">
-          {/* Logo */}
+          
           <Link to="/home" className="font-bold text-3xl">SHOP.CO</Link>
 
-          {/* Links */}
+          
           <ul className="flex gap-5 items-center">
             <li className="relative inline-block group">
               <div className="inline-flex items-center justify-center gap-x-1.5 px-3 py-2 font-medium ">

@@ -13,6 +13,15 @@ import Createcat from './dashboard/createcat'
 import Updateproduct from './dashboard/updatep'
 import Updatecat from './dashboard/updatecat'
 import UserDashboard from './pages/userdashboard'
+import Itemcard from './components/userhome/itemcard'
+import Usernavbar from './components/userhome/usernav'
+import Cart from './components/cart/viewcart'
+import Order from './components/order/vieworder'
+import Adminorder from './dashboard/manageOrder'
+import Search from './components/userhome/search'
+import Profile from './pages/profileup'
+import Mainlayout from './layout/mainlayout'
+import Userlayout from './layout/userlayout'
 
 
 
@@ -20,13 +29,16 @@ function App() {
   const location = useLocation()
   return (
     <>
-
-      {!location.pathname.startsWith('/dashboard') && <Navbar />}
+      {/* {!location.pathname.startsWith('/dashboard') &&
+        !location.pathname.startsWith('/home') && <Navbar />}
+      {location.pathname.startsWith('/home') && <Usernavbar />} */}
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/signup' element={<Sign />} />
-        <Route path='/adminlogin' element={<Admin />} />
-        <Route path='/login' element={<Login />} />
+        <Route element={<Mainlayout />}>
+          <Route path='/' element={<Home />} />
+          <Route path='/signup' element={<Sign />} />
+          <Route path='/adminlogin' element={<Admin />} />
+          <Route path='/login' element={<Login />} />
+        </Route>
         <Route path='/dashboard' element={<DashBoard />}>
           <Route path='users' element={<Userdata />} />
           <Route path='products' element={<Product />} />
@@ -35,8 +47,18 @@ function App() {
           <Route path='category' element={<Category />} />
           <Route path='addcategory' element={<Createcat />} />
           <Route path='updatecategory/:id' element={<Updatecat />} />
+          <Route path='admin/order' element={<Adminorder />} />
         </Route>
-        <Route path='/home' element={<UserDashboard />} />
+        <Route element={<Userlayout />}>
+          <Route path='/home' element={<UserDashboard />} >
+            <Route path='itemcard/:id' element={<Itemcard />} />
+          </Route >
+          <Route path='/search' element={<Search />} />
+          <Route path='/cart' element={<Cart />} />
+          <Route path='/order' element={<Order />} />
+          <Route path='/profile' element={<Profile />} />
+
+        </Route>
 
       </Routes>
     </>

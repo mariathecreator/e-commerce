@@ -4,8 +4,8 @@ import zara from "./zara-logo.png"
 import gucci from './Gucci-logo.png'
 import prada from './prada-logo.png'
 
-export const assets = {
-    cover_pic,
+export const assests = {
+
     zara,
     versace,
     gucci,

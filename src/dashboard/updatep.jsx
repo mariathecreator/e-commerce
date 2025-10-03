@@ -10,20 +10,24 @@ const UpdateProduct = () => {
   const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [category, setCategory] = useState([]);
 
   // Fetch product by id
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await api.get(`/admin/products/${id}`);
+        const resp = await api.get(`/admin/products/${id}`);
         setForm({
-          name: res.data.name,
-          price: res.data.price,
-          brand: res.data.brand,
-          category: res.data.category._id,
+          name: resp.data.name,
+          price: resp.data.price,
+          brand: resp.data.brand,
+          category: resp.data.category._id,
         });
+
+        const resc= await api.get('/admin/getcategories')
+        setCategory(resc.data)
          } catch (err) {
-           setError("Failed to update product",err);
+           setError("Failed to fetch products and categories",err);
          }
       
     };
@@ -89,14 +93,21 @@ const UpdateProduct = () => {
           className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
         />
 
-        <input
-          type="text"
+        <select
           name="category"
           placeholder="Category"
           value={form.category}
           onChange={handleChange}
           className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
-        />
+        >
+          <option value="" disabled>Select a category
+            </option>
+            {category.map((cat)=>(
+              <option key={cat._id} value={cat._id}>
+                {cat.name}
+                </option>
+            ))}
+          </select>
 
         <input
           type="file"

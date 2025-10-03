@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import all_product from "../assets/Assets/Frontend_Assets/all_product";
-import api from "../global/Axios";
 
 
 const Body = () => {
