@@ -7,7 +7,7 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
-    const[sucess , isSucess] =useState(null)
+    const [sucess , isSucess] =useState(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
