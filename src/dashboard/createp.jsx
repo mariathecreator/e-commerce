@@ -21,7 +21,7 @@ const Createproduct = () => {
       formdata.append("category", form.category)
       if (image) formdata.append("image", image)
 
-      await api.post("/admin/addproducts", formdata, {
+      await api.post("/api/admin/addproducts", formdata, {
         headers: { "Content-Type": "multipart/form-data" },
       })
 

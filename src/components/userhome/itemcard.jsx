@@ -13,7 +13,7 @@ const Itemcard = () => {
   useEffect(() => {
     const getitem = async () => {
       try {
-        const res = await api.get(`/user/viewproduct/${id}`)
+        const res = await api.get(`/api/user/viewproduct/${id}`)
         setItem(res.data)
       } catch (err) {
         console.log("data not found", err)
@@ -26,7 +26,7 @@ const Itemcard = () => {
 
   const handlebutton = async () => {
     try {
-      const res = await api.post(`/user/addcart/${item._id}`, { quantity: 1 });
+      const res = await api.post(`/api/user/addcart/${item._id}`, { quantity: 1 });
       console.log(res.data);
       addtocart(item); // update cart context
       alert('Item added to cart!');

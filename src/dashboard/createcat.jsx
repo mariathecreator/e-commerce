@@ -18,7 +18,7 @@ const Createcat = () => {
     //   formdata.append("price", form.description)
       
 
-      await api.post("/admin/addcategories",form)
+      await api.post("/api/admin/addcategories",form)
 
       setForm({ name: "", description: ""})
       setError(null)

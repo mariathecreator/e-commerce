@@ -10,7 +10,7 @@ const Category = () => {
     useEffect(() => {
         const fetchCategory = async () => {
             try {
-                const res = await api.get('/admin/getcategories')
+                const res = await api.get('/api/admin/getcategories')
                 setData(res.data)
             }
             catch (err) {
@@ -22,7 +22,7 @@ const Category = () => {
 
     const deleteCategory = async (id) => {
         try {
-            await api.delete(`/admin/deletecategories/${id}`)
+            await api.delete(`/api/admin/deletecategories/${id}`)
             setData((prev) => prev.filter((c) => c._id !== id))
         }
         catch (err) {

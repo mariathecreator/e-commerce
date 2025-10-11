@@ -16,7 +16,7 @@ const UpdateProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const resp = await api.get(`/admin/products/${id}`);
+        const resp = await api.get(`/api/admin/products/${id}`);
         setForm({
           name: resp.data.name,
           price: resp.data.price,
@@ -24,7 +24,7 @@ const UpdateProduct = () => {
           category: resp.data.category._id,
         });
 
-        const resc= await api.get('/admin/getcategories')
+        const resc= await api.get('/api/admin/getcategories')
         setCategory(resc.data)
          } catch (err) {
            setError("Failed to fetch products and categories",err);
@@ -48,7 +48,7 @@ const UpdateProduct = () => {
       formdata.append("category", form.category);
       if (image) formdata.append("image", image);
 
-      await api.put(`/admin/updateproducts/${id}`, formdata, {
+      await api.put(`/api/admin/updateproducts/${id}`, formdata, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

@@ -13,7 +13,7 @@ const Login = () => {
         e.preventDefault()
  console.log("Form submitted ")
         try {
-            const res = await api.post('/user/login', { email, password },{sucess:true})
+            const res = await api.post('/api/user/login', { email, password },{sucess:true})
 
             console.log(res.data);
             setEmail("")

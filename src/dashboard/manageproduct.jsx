@@ -11,7 +11,7 @@ const Product = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await api.get("/admin/products");
+        const res = await api.get("/api/admin/products");
         setData(res.data);
         setLoading(false);
       } catch (err) {
@@ -24,7 +24,7 @@ const Product = () => {
 
   const deleteProducts = async (id) => {
     try {
-      await api.delete(`/admin/deleteproducts/${id}`);
+      await api.delete(`/api/admin/deleteproducts/${id}`);
       setData((prev) => prev.filter((p) => p._id !== id));
     } catch (err) {
       console.log("Product cannot be deleted", err);

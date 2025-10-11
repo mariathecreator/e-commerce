@@ -13,7 +13,7 @@ const Sign = () => {
         e.preventDefault();
 
         try {
-            const res=await api.post("/register",{name,email,password})
+            const res=await api.post("/api/register",{name,email,password})
 
             console.log("Response:", res.data);
             setName("")

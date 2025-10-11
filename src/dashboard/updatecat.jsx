@@ -13,7 +13,7 @@ const Updatecat = () => {
     useEffect(() => {
         const fetchCategory = async () => {
             try {
-                const res = await api.get(`/admin/getcategories/${id}`)
+                const res = await api.get(`/api/admin/getcategories/${id}`)
                 setForm({name:res.data.name,
                     description:res.data.description
                 })
@@ -38,7 +38,7 @@ const Updatecat = () => {
               formdata.append("description", form.description)
 
 
-            await api.put(`/admin/updatecategories/${id}`, formdata,{
+            await api.put(`/api/admin/updatecategories/${id}`, formdata,{
                 headers: { "Content-Type": "application/json" },
             })
 

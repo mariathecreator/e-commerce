@@ -13,7 +13,7 @@ const Admin = () => {
         e.preventDefault()
 
         try {
-            const res =await api.post("/admin/login", { email, password })
+            const res =await api.post("/api/admin/login", { email, password })
             console.log(res);
 
             setEmail("")

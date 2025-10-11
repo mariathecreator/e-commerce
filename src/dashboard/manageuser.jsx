@@ -13,7 +13,7 @@ const Userdata = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await api.get("/admin/getusers");
+        const res = await api.get("/api/admin/getusers");
         setData(res.data);
       } catch (err) {
         setError(err.message);
@@ -27,7 +27,7 @@ const Userdata = () => {
 
   const enableUser = async (id) => {
     try {
-      await api.put(`/admin/userenable/${id}`);
+      await api.put(`/api/admin/userenable/${id}`);
       setData((prev) =>
         prev.map((user) =>
           user._id === id ? { ...user, status: "Enable" } : user
@@ -41,7 +41,7 @@ const Userdata = () => {
  
   const disableUser = async (id) => {
     try {
-      await api.put(`/admin/userdisable/${id}`);
+      await api.put(`/api/admin/userdisable/${id}`);
       setData((prev) =>
         prev.map((user) =>
           user._id === id ? { ...user, status: "Disable" } : user

@@ -11,7 +11,7 @@ const Cart = () => {
     useEffect(() => {
         const fetchcart = async () => {
             try {
-                const res = await api.get("/user/viewcart")
+                const res = await api.get("/api/user/viewcart")
                 setCart(res.data)
             }
             catch (err) {
@@ -23,7 +23,7 @@ const Cart = () => {
 
     const handleAdd = async (productId) => {
         try {
-            const res = await api.put(`/user/updatecart/${productId}`, { action: "increment" })
+            const res = await api.put(`/api/user/updatecart/${productId}`, { action: "increment" })
             setCart(res.data) 
         } catch (err) {
             console.error(err)
@@ -33,7 +33,7 @@ const Cart = () => {
     // Decrement quantity
     const handleSubtract = async (productId) => {
         try {
-            const res = await api.put(`/user/updatecart/${productId}`, { action: "decrement" })
+            const res = await api.put(`/api/user/updatecart/${productId}`, { action: "decrement" })
             setCart(res.data) 
         } catch (err) {
             console.error(err)
@@ -42,7 +42,7 @@ const Cart = () => {
 
     const handleDelete = async (productId) => {
         try {
-            const res = await api.delete(`/user/deleteitems/${productId}`)
+            const res = await api.delete(`/api/user/deleteitems/${productId}`)
             setCart(res.data)
         }
         catch (err) {
@@ -52,7 +52,7 @@ const Cart = () => {
 
     const handleOrder = async () => {
         try {
-            const res = await api.post('/user/addorder', { delivery_status: "pending" })
+            const res = await api.post('/api/user/addorder', { delivery_status: "pending" })
             alert('Order placed successfully')
             setCart({ items: [], total: 0 }) // Clear cart after order
             navigate('/order') 

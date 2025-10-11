@@ -5,7 +5,7 @@ const Sidebar = () => {
     const navigate = useNavigate();
     const handleLogout = async () => {
         try {
-            await api.delete('/admin/logout')
+            await api.delete('/api/admin/logout')
 
             localStorage.removeItem('adminToken')
             sessionStorage.removeItem('adminToken')

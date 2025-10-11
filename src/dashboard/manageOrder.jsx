@@ -11,7 +11,7 @@ const Adminorder = () => {
     useEffect(() => {
         const fetchOrder = async () => {
             try {
-                const res = await api.get('/admin/getorder')
+                const res = await api.get('/api/admin/getorder')
                 setOrder(res.data)
             }
             catch (err) {
@@ -23,7 +23,7 @@ const Adminorder = () => {
 
     const updateorder = async (orderid, status) => {
         try {
-            const res = await api.put(`/admin/updateorder/${orderid}`, { delivery_status: status })
+            const res = await api.put(`/api/admin/updateorder/${orderid}`, { delivery_status: status })
             setOrder((prev) => prev.map((ord) => (ord._id === orderid ? { ...ord, delivery_status: status } : ord)))
         }
         catch (err) {

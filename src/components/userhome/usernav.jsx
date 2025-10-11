@@ -18,7 +18,7 @@ const Usernavbar = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const res = await api.get('/user/getprofile')
+                const res = await api.get('/api/user/getprofile')
                 setProfile(res.data)
             }
             catch (err) {
@@ -38,7 +38,7 @@ const Usernavbar = () => {
 
     const handleLogout = async () => {
         try {
-            const res = await api.delete('/user/logout')
+            const res = await api.delete('/api/user/logout')
 
             if (res.status === 200) {
 

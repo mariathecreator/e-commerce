@@ -9,7 +9,7 @@ const Order = () => {
     useEffect(() => {
         const fetchOrder = async () => {
             try {
-                const res = await api.get('/user/getorder')
+                const res = await api.get('/api/user/getorder')
                 setOrder(res.data)
             }
             catch (err) {

@@ -11,7 +11,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await api.get('/user/getprofile');
+        const res = await api.get('/api/user/getprofile');
         setForm({ name: res.data.name, email: res.data.email });
       } catch (err) {
         setError("Failed to load profile");
@@ -27,7 +27,7 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.put('/user/updateprofile', form);
+      await api.put('/api/user/updateprofile', form);
       setSuccess("Profile updated successfully!");
       setError(null);
       navigate('/home')

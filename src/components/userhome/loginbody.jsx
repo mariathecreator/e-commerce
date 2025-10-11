@@ -12,7 +12,7 @@ const Userbody = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await api.get("/user/viewproducts")
+                const res = await api.get("/api/user/viewproducts")
                 console.log(res.data);
                 console.log(res);
 
