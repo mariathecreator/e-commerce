@@ -48,12 +48,12 @@ const Login = () => {
                     {message}
                 </p>
             )}
-            <div className="mt-10 text-lg text-center text-black">
+            {/* <div className="mt-10 text-lg text-center text-black">
                 <h3 className="">If admin? Then Login here</h3>
                 <Link className="underline" to="/adminlogin">Login</Link>
 
 
-            </div>
+            </div> */}
         </div >
     )
 }
