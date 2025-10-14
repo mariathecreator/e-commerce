@@ -7,14 +7,12 @@ import api from "../../global/Axios";
 
 const Usernavbar = () => {
     const { cartItems } = useCart();
-    const { query, setQuery } = useSearch()
-    const navigate = useNavigate();
     const [profile, setProfile] = useState(null);
     const [open, setOpen] = useState(false)
-
-
+    
+    
     const Quantity = cartItems.reduce((total, item) => total + item.quantity, 0)
-
+    
     useEffect(() => {
         const fetchProfile = async () => {
             try {
@@ -27,7 +25,9 @@ const Usernavbar = () => {
         }
         fetchProfile()
     }, [])
-
+    
+    const { query, setQuery } = useSearch()
+    const navigate = useNavigate();
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             navigate(`/search?q=${query}`);
@@ -66,12 +66,12 @@ const Usernavbar = () => {
 
             {/* Main navbar */}
             <div className="py-6">
-                <div className="flex gap-6 justify-center items-center font-medium">
+                <div className="flex gap-6 justify-evenly items-center font-medium">
 
                     <Link to="/home" className="font-bold text-3xl">SHOP.CO</Link>
 
 
-                    <ul className="flex gap-5 items-center">
+                    {/* <ul className="flex gap-5 items-center">
                         <li className="relative inline-block group">
                             <div className="inline-flex items-center justify-center gap-x-1.5 px-3 py-2 font-medium ">
                                 Shop
@@ -108,7 +108,7 @@ const Usernavbar = () => {
                         <li>On Sale</li>
                         <li>New Arrivals</li>
                         <li>Brands</li>
-                    </ul>
+                    </ul> */}
 
                     {/* Search bar */}
                     <div>
@@ -142,7 +142,9 @@ const Usernavbar = () => {
                     {/* Profile */}
                     <div className="relative  ml-4 cursor-pointer"
                         onMouseEnter={() => setOpen(true)}
-                        onMouseLeave={() => setOpen(false)}>
+                        
+                        onClick={() => setOpen(false)}
+                        >
                         <div className="flex items-center gap-2">
                             <FaUserCircle className="text-2xl" />
                             {profile && <span className="text-sm font-medium">{profile.name}</span>}

@@ -1,11 +1,23 @@
 import { FaShoppingCart } from "react-icons/fa";
-import { ChevronDownIcon } from "@heroicons/react/24/solid"; 
-import { Link } from "react-router-dom";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { Link, useNavigate } from "react-router-dom";
+import { useSearch } from "./cart/context";
 
 const Navbar = () => {
+
+   const { query, setQuery } = useSearch()
+
+      const navigate = useNavigate();
+      
+      const handleKeyDown = (e) => {
+          if (e.key === 'Enter') {
+              navigate(`/search?q=${query}`);
+          }
+      }
+  
   return (
     <div>
-      
+
       <div className="bg-black text-white text-xs flex gap-2 justify-center py-2">
         <p>Sign up and get 20% off to your first order.</p>
         <a href="#" className="underline">
@@ -15,12 +27,12 @@ const Navbar = () => {
 
       {/* Main navbar */}
       <div className="py-6">
-        <div className="flex gap-6 justify-center items-center font-medium">
-          
+        <div className="flex gap-6 items-center font-medium justify-evenly">
+
           <Link to="/" className="font-bold text-3xl">SHOP.CO</Link>
 
-          
-          <ul className="flex gap-5 items-center">
+
+          {/* <ul className="flex gap-5 items-center">
             <li className="relative inline-block group">
               <div className="inline-flex items-center justify-center gap-x-1.5 px-3 py-2 font-medium ">
                 Shop
@@ -57,7 +69,7 @@ const Navbar = () => {
             <li>On Sale</li>
             <li>New Arrivals</li>
             <li>Brands</li>
-          </ul>
+          </ul> */}
 
           {/* Search bar */}
           <div>
@@ -65,6 +77,9 @@ const Navbar = () => {
               type="search"
               id="mySearchInput"
               placeholder="Search your style"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="bg-[#ece9e9] w-[300px] h-[45px] px-4 rounded-3xl outline-none"
             />
           </div>
