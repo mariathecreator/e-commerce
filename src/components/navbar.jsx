@@ -1,101 +1,97 @@
-import { FaShoppingCart } from "react-icons/fa";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+import { FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSearch } from "./cart/context";
 
 const Navbar = () => {
+  const { query, setQuery } = useSearch();
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-   const { query, setQuery } = useSearch()
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      navigate(`/search?q=${query}`);
+    }
+  };
 
-      const navigate = useNavigate();
-      
-      const handleKeyDown = (e) => {
-          if (e.key === 'Enter') {
-              navigate(`/search?q=${query}`);
-          }
-      }
-  
   return (
-    <div>
-
-      <div className="bg-black text-white text-xs flex gap-2 justify-center py-2">
-        <p>Sign up and get 20% off to your first order.</p>
-        <a href="#" className="underline">
+    <div className="w-full">
+      {/* Top offer bar */}
+      <div className="bg-black text-white text-xs flex flex-col sm:flex-row gap-2 justify-center items-center py-2 text-center">
+        <p>Sign up and get 20% off your first order.</p>
+        <a href="#" className="underline hover:text-gray-300">
           Sign Up Now
         </a>
       </div>
 
       {/* Main navbar */}
-      <div className="py-6">
-        <div className="flex gap-6 items-center font-medium justify-evenly">
+      <nav className="py-4 px-6 flex justify-between items-center bg-white shadow-md relative">
+        {/* Logo */}
+        <Link to="/" className="font-bold text-2xl sm:text-3xl">
+          SHOP.CO
+        </Link>
 
-          <Link to="/" className="font-bold text-3xl">SHOP.CO</Link>
+        {/* Search bar (hidden on small screens) */}
+        <div className="hidden md:block">
+          <input
+            type="search"
+            id="mySearchInput"
+            placeholder="Search your style"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="bg-gray-100 w-[280px] h-[40px] px-4 rounded-3xl outline-none focus:ring-2 focus:ring-black transition"
+          />
+        </div>
 
-
-          {/* <ul className="flex gap-5 items-center">
-            <li className="relative inline-block group">
-              <div className="inline-flex items-center justify-center gap-x-1.5 px-3 py-2 font-medium ">
-                Shop
-                <ChevronDownIcon
-                  aria-hidden="true"
-                  className="-mr-1 h-5 w-5"
-                />
-              </div>
-                     <div
-                className="absolute left-0 mt-2 hidden w-40 bg-white shadow-md rounded-md 
-                           group-hover:block group-hover:opacity-100 group-hover:translate-y-0
-                           opacity-0 translate-y-2 transition-all duration-300 ease-out z-10"
-              >
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Men
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Women
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Kids
-                </a>
-              </div>  
-            </li>
-            <li>On Sale</li>
-            <li>New Arrivals</li>
-            <li>Brands</li>
-          </ul> */}
-
-          {/* Search bar */}
-          <div>
-            <input
-              type="search"
-              id="mySearchInput"
-              placeholder="Search your style"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
-              className="bg-[#ece9e9] w-[300px] h-[45px] px-4 rounded-3xl outline-none"
-            />
-          </div>
-
-          {/* Auth links */}
-          <div className="flex items-center ml-6 gap-4 font-bold">
-            <Link to="/signup">Sign Up</Link>
-            <Link to="/login">Login</Link>
-          </div>
-
+        {/* Right section */}
+        <div className="flex items-center gap-5">
           {/* Cart */}
-          <div className="flex items-center">
+          <div className="relative cursor-pointer">
             <FaShoppingCart className="text-xl" />
           </div>
+
+          {/* Auth links (hidden on small screens) */}
+          <div className="hidden md:flex items-center gap-4 font-semibold">
+            <Link to="/signup" className="hover:text-gray-700">
+              Sign Up
+            </Link>
+            <Link to="/login" className="hover:text-gray-700">
+              Login
+            </Link>
+          </div>
+
+          {/* Hamburger icon (visible only on mobile) */}
+          <button
+            className="md:hidden text-2xl"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <FaTimes /> : <FaBars />}
+          </button>
         </div>
-      </div>
+
+        {/* Mobile dropdown menu */}
+        <div
+          className={`absolute top-16 left-0 w-full bg-white shadow-lg flex flex-col items-center gap-4 py-4 transition-all duration-300 ${
+            menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+          }`}
+        >
+          <input
+            type="search"
+            placeholder="Search your style"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="bg-gray-100 w-[90%] h-[40px] px-4 rounded-3xl outline-none"
+          />
+          <Link to="/signup" className="hover:text-gray-700" onClick={() => setMenuOpen(false)}>
+            Sign Up
+          </Link>
+          <Link to="/login" className="hover:text-gray-700" onClick={() => setMenuOpen(false)}>
+            Login
+          </Link>
+        </div>
+      </nav>
     </div>
   );
 };

@@ -56,7 +56,7 @@ const Itemcard = () => {
 
         <img
           className="w-full h-80 object-contain rounded-lg mb-4"
-          src={`http://localhost:3000/api/uploads/${item.image}`}
+          src={`http://localhost:3000/uploads/${item.image}`}
           alt={item.name}
         />
         <h3 className="text-2xl font-bold">{item.name}</h3>

@@ -4,125 +4,141 @@ import { FaPlus, FaMinus } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
 
 const Cart = () => {
-    const [cart, setCart] = useState(null)
-    const [error, setError] = useState(null)
-    const navigate = useNavigate()
+  const [cart, setCart] = useState(null)
+  const [error, setError] = useState(null)
+  const navigate = useNavigate()
 
-    useEffect(() => {
-        const fetchcart = async () => {
-            try {
-                const res = await api.get("/api/user/viewcart")
-                setCart(res.data)
-            }
-            catch (err) {
-                setError(err.message)
-            }
-        }
-        fetchcart()
-    }, [])
-
-    const handleAdd = async (productId) => {
-        try {
-            const res = await api.put(`/api/user/updatecart/${productId}`, { action: "increment" })
-            setCart(res.data) 
-        } catch (err) {
-            console.error(err)
-        }
+  // 🔹 Fetch cart data
+  const fetchCart = async () => {
+    try {
+      const res = await api.get("/api/user/viewcart")
+      setCart(res.data)
+    } catch (err) {
+      setError(err.message)
     }
+  }
 
-    // Decrement quantity
-    const handleSubtract = async (productId) => {
-        try {
-            const res = await api.put(`/api/user/updatecart/${productId}`, { action: "decrement" })
-            setCart(res.data) 
-        } catch (err) {
-            console.error(err)
-        }
+  useEffect(() => {
+    fetchCart()
+  }, [])
+
+  // 🔹 Increment quantity
+  const handleAdd = async (productId) => {
+    try {
+      await api.put(`/api/user/updatecart/${productId}`, { action: "increment" })
+      fetchCart() // refetch cart instead of setting res.data
+    } catch (err) {
+      console.error(err)
     }
+  }
 
-    const handleDelete = async (productId) => {
-        try {
-            const res = await api.delete(`/api/user/deleteitems/${productId}`)
-            setCart(res.data)
-        }
-        catch (err) {
-            console.error(err)
-        }
+  // 🔹 Decrement quantity
+  const handleSubtract = async (productId) => {
+    try {
+      await api.put(`/api/user/updatecart/${productId}`, { action: "decrement" })
+      fetchCart()
+    } catch (err) {
+      console.error(err)
     }
+  }
 
-    const handleOrder = async () => {
-        try {
-            const res = await api.post('/api/user/addorder', { delivery_status: "pending" })
-            alert('Order placed successfully')
-            setCart({ items: [], total: 0 }) // Clear cart after order
-            navigate('/order') 
-        }
-        catch (err) {
-            console.error(err)
-            alert('Failed to place order')
-        }
+  // 🔹 Delete product
+  const handleDelete = async (productId) => {
+    try {
+      await api.delete(`/api/user/deleteitems/${productId}`)
+      fetchCart()
+    } catch (err) {
+      console.error(err)
     }
+  }
 
-    if (error) return <div className="text-red-500 text-center mt-8">Error: {error}</div>
-    if (!cart || !cart.items || cart.items.length === 0) return <div className="text-black text-center mt-8">Your cart is empty.</div>
+  // 🔹 Place Order
+  const handleOrder = async () => {
+    try {
+      await api.post('/api/user/addorder', { delivery_status: "pending" })
+      alert('Order placed successfully!')
+      setCart({ items: [], total: 0 })
+      navigate('/order')
+    } catch (err) {
+      console.error(err)
+      alert('Failed to place order.')
+    }
+  }
 
-    return (
-        <div>
-            <h1 className="text-3xl font-bold mb-4 text-center">Your Cart</h1>
-            <div className="max-w-xl mx-auto space-y-4">
-                {cart.items.map((item, i) => (
-                    <div className="flex flex-col justify-between items-center border-b pb-2" key={i}>
-                        <div>
-                            <img className="w-16 h-16 object-contain" src={item.product_image} alt={item.product_name} />
-                            <h4 className="font-semibold">Product Name:{item.product_name}</h4>
+  // 🔹 Conditional renders
+  if (error) return <div className="text-red-500 text-center mt-8">Error: {error}</div>
+  if (!cart || !cart.items || cart.items.length === 0)
+    return <div className="text-black text-center mt-8">Your cart is empty.</div>
 
-                            <div className="flex items-center gap-2 mt-2">
-                                <button
-                                    onClick={() => handleSubtract(item.product)}
-                                    className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
-                                >
-                                    <FaMinus />
-                                </button>
-                                <span className="font-bold">{item.quantity}</span>
-                                <button
-                                    onClick={() => handleAdd(item.product)}
-                                    className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
-                                >
-                                    <FaPlus />
-                                </button>
-                            </div>
+  // 🔹 Responsive layout
+  return (
+    <div className="p-4 sm:p-8">
+      <h1 className="text-3xl font-bold mb-6 text-center">Your Cart</h1>
 
-                        </div>
-                        <div>
-                            <h3 className="font-semibold">Price: {item.product_price}</h3>
-                            <h4 className="text-gray-600 text-sm">Subtotal: {item.subtotal}</h4>
-                        </div>
-                        <div className=" text-center">
-                            <h4 className="text-xl font-bold">Total: {cart.total}</h4>
-                        </div>
-                        <div className="mt-6 text-center">
-
-                            <button
-                                onClick={() => handleDelete(item.product)}
-                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                            >
-                                Delete
-                            </button>
-
-                            <button
-                                onClick={handleOrder}
-                                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-                            >
-                                Place Order
-                            </button>
-
-                        </div>
-
-
-                    </div>
-                ))}
+      <div className="flex flex-col gap-6 max-w-3xl mx-auto">
+        {cart.items.map((item, i) => (
+          <div
+            key={i}
+            className="flex flex-col sm:flex-row justify-between items-center bg-white border rounded-lg shadow-sm p-4 hover:shadow-md transition-all"
+          >
+            {/* Image + Name */}
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+              <img
+                className="w-24 h-24 object-contain rounded-md"
+                src={`http://localhost:3000/uploads/${item.product_image}`}
+                alt={item.product_name}
+              />
+              <div className="text-center sm:text-left">
+                <h4 className="font-semibold">{item.product_name}</h4>
+                <p className="text-gray-600">Price: ${item.product_price}</p>
+              </div>
             </div>
-        </div>
-    )
+
+            {/* Quantity Controls */}
+            <div className="flex items-center gap-2 mt-3 sm:mt-0">
+              <button
+                onClick={() => handleSubtract(item.product)}
+                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+              >
+                <FaMinus />
+              </button>
+              <span className="font-bold">{item.quantity}</span>
+              <button
+                onClick={() => handleAdd(item.product)}
+                className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+              >
+                <FaPlus />
+              </button>
+            </div>
+
+            {/* Price Info */}
+            <div className="text-center sm:text-right mt-3 sm:mt-0">
+              <h4 className="font-semibold">Subtotal: ${item.subtotal}</h4>
+            </div>
+
+            {/* Delete */}
+            <button
+              onClick={() => handleDelete(item.product)}
+              className="mt-4 sm:mt-0 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Total + Place Order */}
+      <div className="mt-8 text-center">
+        <h4 className="text-2xl font-bold">Total: ${cart.total}</h4>
+        <button
+          onClick={handleOrder}
+          className="mt-4 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+        >
+          Place Order
+        </button>
+      </div>
+    </div>
+  )
 }
+
 export default Cart

@@ -13,7 +13,7 @@ const Search = () => {
     useEffect(() => {
         const fetchResults = async () => { 
             try {
-                const res = await api.get(`/api/user/search?query=${query}`,
+                const res = await api.get(`/api/search?query=${query}`,
                     {
                         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
                     }
