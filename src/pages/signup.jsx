@@ -1,6 +1,6 @@
 import { useState } from "react";
 import api from "../global/Axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sign = () => {
     const [name, setName] = useState("")
@@ -8,6 +8,7 @@ const Sign = () => {
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
     const [sucess,isSucess]=useState(null)
+    const navigate = useNavigate();
 
 
     const handleSubmit = async (e) => {
@@ -22,6 +23,7 @@ const Sign = () => {
             setPassword("")
             isSucess(true)
             setMessage("registered successfully")
+            navigate('/login')
         }
         catch (err) {
             console.error(err.response?.data?.message || err)

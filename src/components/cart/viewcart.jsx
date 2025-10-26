@@ -4,11 +4,11 @@ import { FaPlus, FaMinus } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
 
 const Cart = () => {
+  
   const [cart, setCart] = useState(null)
   const [error, setError] = useState(null)
   const navigate = useNavigate()
 
-  // 🔹 Fetch cart data
   const fetchCart = async () => {
     try {
       const res = await api.get("/api/user/viewcart")
@@ -22,17 +22,17 @@ const Cart = () => {
     fetchCart()
   }, [])
 
-  // 🔹 Increment quantity
+
   const handleAdd = async (productId) => {
     try {
       await api.put(`/api/user/updatecart/${productId}`, { action: "increment" })
-      fetchCart() // refetch cart instead of setting res.data
+      fetchCart() 
     } catch (err) {
       console.error(err)
     }
   }
 
-  // 🔹 Decrement quantity
+  
   const handleSubtract = async (productId) => {
     try {
       await api.put(`/api/user/updatecart/${productId}`, { action: "decrement" })
@@ -42,7 +42,7 @@ const Cart = () => {
     }
   }
 
-  // 🔹 Delete product
+
   const handleDelete = async (productId) => {
     try {
       await api.delete(`/api/user/deleteitems/${productId}`)
@@ -52,7 +52,7 @@ const Cart = () => {
     }
   }
 
-  // 🔹 Place Order
+ 
   const handleOrder = async () => {
     try {
       await api.post('/api/user/addorder', { delivery_status: "pending" })
@@ -65,12 +65,12 @@ const Cart = () => {
     }
   }
 
-  // 🔹 Conditional renders
+  
   if (error) return <div className="text-red-500 text-center mt-8">Error: {error}</div>
   if (!cart || !cart.items || cart.items.length === 0)
     return <div className="text-black text-center mt-8">Your cart is empty.</div>
 
-  // 🔹 Responsive layout
+     
   return (
     <div className="p-4 sm:p-8">
       <h1 className="text-3xl font-bold mb-6 text-center">Your Cart</h1>

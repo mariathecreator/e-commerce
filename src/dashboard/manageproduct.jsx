@@ -69,7 +69,7 @@ const Product = () => {
                 <td className="px-6 py-4">{product.price}</td>
                 <td className="px-6 py-4">{product.brand}</td>
                 <td className="px-6 py-4">{product.category.name}</td>
-                <td className="flex gap-2">
+                <td className="flex gap-2 mt-10">
                   <button
                     onClick={() => navigate(`/dashboard/updateproducts/${product._id}`)}
                     className="px-4 py-1 rounded text-sm font-medium bg-blue-500 hover:bg-blue-600"

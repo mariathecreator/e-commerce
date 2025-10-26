@@ -13,20 +13,24 @@ const Usernavbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const Quantity = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const Quantity = cartItems.reduce((total, item) => total + (item.quantity || 0), 0);
+
+  // Fetch profile
+  const fetchProfile = async () => {
+    try {
+      const res = await api.get("/api/user/getprofile", { withCredentials: true });
+      setProfile(res.data);
+    } catch (err) {
+      console.log("Error fetching profile", err);
+    }
+  };
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const res = await api.get("/api/user/getprofile", { withCredentials: true });
-        setProfile(res.data);
-      } catch (err) {
-        console.log("Error fetching profile", err);
-      }
-    };
     fetchProfile();
+     // ensure navbar stays in sync on load
   }, []);
 
+  // Handle search
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       navigate(`/search?q=${query}`);
@@ -34,6 +38,7 @@ const Usernavbar = () => {
     }
   };
 
+  // Handle logout
   const handleLogout = async () => {
     try {
       const res = await api.delete("/api/user/logout", { withCredentials: true });
@@ -58,14 +63,13 @@ const Usernavbar = () => {
         </a>
       </div>
 
-      {/* Navbar main */}
+      {/* Navbar */}
       <div className="flex items-center justify-between px-4 md:px-10 py-4">
-        {/* Logo */}
         <Link to="/home" className="font-bold text-3xl tracking-wide">
           SHOP.CO
         </Link>
 
-        {/* Desktop search */}
+        {/* Search (desktop) */}
         <div className="hidden md:block">
           <input
             type="search"
@@ -77,7 +81,7 @@ const Usernavbar = () => {
           />
         </div>
 
-        {/* Right Section */}
+        {/* Right section */}
         <div className="flex items-center gap-5">
           {/* Cart */}
           <div className="relative">
@@ -91,16 +95,14 @@ const Usernavbar = () => {
             )}
           </div>
 
-          {/* Profile Dropdown */}
+          {/* Profile */}
           <div className="relative hidden md:block">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
               className="flex items-center gap-2 cursor-pointer"
             >
               <FaUserCircle className="text-2xl" />
-              {profile && (
-                <span className="text-sm font-medium">{profile.name}</span>
-              )}
+              {profile && <span className="text-sm font-medium">{profile.name}</span>}
             </button>
 
             {dropdownOpen && (
@@ -129,7 +131,7 @@ const Usernavbar = () => {
             )}
           </div>
 
-          {/* Hamburger for mobile */}
+          {/* Hamburger (mobile) */}
           <button
             className="text-2xl md:hidden"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -139,10 +141,9 @@ const Usernavbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-gray-50 border-t border-gray-200 p-4 space-y-4">
-          {/* Search */}
           <input
             type="search"
             placeholder="Search your style"
@@ -151,16 +152,12 @@ const Usernavbar = () => {
             onKeyDown={handleKeyDown}
             className="bg-gray-100 w-full h-[40px] px-4 rounded-3xl outline-none"
           />
-
-          {/* Profile name */}
           {profile && (
             <div className="flex items-center gap-2 mt-2">
               <FaUserCircle className="text-2xl" />
               <span className="font-medium">{profile.name}</span>
             </div>
           )}
-
-          {/* Links */}
           <Link
             to="/profile"
             className="block text-gray-800 hover:text-black"

@@ -7,7 +7,7 @@ const Itemcard = () => {
   const [item, setItem] = useState(null)
   const { id } = useParams()
   const navigate = useNavigate()
-  const { addtocart } = useCart()
+  const { addToCart } = useCart()
 
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Itemcard = () => {
     try {
       const res = await api.post(`/api/user/addcart/${item._id}`, { quantity: 1 });
       console.log(res.data);
-      addtocart(item); // update cart context
+      addToCart(item); // update cart context
       alert('Item added to cart!');
       navigate('/cart')
 
